@@ -39,7 +39,7 @@ import com.sports.kickauction.service.RequestService;
 import lombok.extern.log4j.Log4j2;
 
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://kickauction-frontend-001.s3-website.ap-northeast-2.amazonaws.com", allowCredentials = "true")
 @Log4j2
 @RestController
 @RequestMapping("/api/orders")

@@ -105,7 +105,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .userInfoEndpoint(user -> user.userService(oAuth2UserService))
                         .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("http://localhost:3000/socialgowhere");
+                            response.sendRedirect("http://kickauction-frontend-001.s3-website.ap-northeast-2.amazonaws.com/socialgowhere");
                         }));
         return http.build();
     }
@@ -116,7 +116,7 @@ public class SecurityConfig {
         // 프론트 개발 서버 주소
         // setAllowedOrigins(...) 대신 → setAllowedOriginPatterns(...) 사용함
         // 이유: setAllowCredentials(true)와 함께 사용할 수 있기 때문
-        config.setAllowedOriginPatterns(List.of("http://localhost:3000"));
+        config.setAllowedOriginPatterns(List.of("http://kickauction-frontend-001.s3-website.ap-northeast-2.amazonaws.com"));
         // 허용 HTTP 메서드
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         // 허용 헤더
