@@ -59,19 +59,17 @@ public class SecurityConfig {
 
                         // 2) public 하게 열어둘 엔드포인트 (모두 slash 로 시작!)
                         .requestMatchers(
-                                "/",
+                                 "/",
                                 "/presignup",
                                 "/presignups",
                                 "/signup",
                                 "/signups",
                                 "/login",
+                                "/api/**",
                                 "/images/**",
                                 "/api/display/**",
                                 "/api/members/**",
-                                "/api/messages/**",
-                                "/api/orders/list", 
-                                "/api/community/list", 
-                                "/api/seller/list"
+                                "/api/messages/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
