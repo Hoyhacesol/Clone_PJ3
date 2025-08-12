@@ -69,9 +69,9 @@ public class SecurityConfig {
                                 "/api/display/**",
                                 "/api/members/**",
                                 "/api/messages/**",
-                                "/api/requests/list", 
+                                "/api/orders/list", 
                                 "/api/community/list", 
-                                "/api/sellers/list"
+                                "/api/seller/list"
                                 )
 
                         // SELLER만 가능한 API
