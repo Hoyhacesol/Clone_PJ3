@@ -72,21 +72,7 @@ public class SecurityConfig {
                                 "/api/orders/list", 
                                 "/api/community/list", 
                                 "/api/seller/list"
-                                )
-
-                        // SELLER만 가능한 API
-                        // .requestMatchers("/api/seller/register", "/api/seller/register-info", "/api/seller/modify", "/api/seller/modify-info")
-                        // .hasRole("SELLER")
-
-                        // // 로그인만 하면 누구나 접근 가능한 API
-                        // .requestMatchers("/api/seller/registered").authenticated()
-
-                        // // 공개 API
-                        // .requestMatchers("/api/seller/list", "/api/seller/detail").permitAll()
-
-                        // 로그인한 사용자만 업로드·삭제 가능
-                        //.requestMatchers("/api/uploadAjax", "/api/removeFile").authenticated()
-                        .permitAll()
+                                ).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginProcessingUrl("/login")
