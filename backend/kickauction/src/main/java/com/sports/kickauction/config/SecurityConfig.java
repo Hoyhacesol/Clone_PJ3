@@ -65,11 +65,13 @@ public class SecurityConfig {
                                 "/signup",
                                 "/signups",
                                 "/login",
-                                "/api/**",
                                 "/images/**",
                                 "/api/display/**",
                                 "/api/members/**",
-                                "/api/messages/**"
+                                "/api/messages/**",
+                                "/api/requests/list", 
+                                "/api/community/list", 
+                                "/api/sellers/list"
                                 )
 
                         // SELLER만 가능한 API

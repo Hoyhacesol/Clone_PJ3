@@ -33,15 +33,15 @@ const MainPage = () => {
 
   useEffect(() => {
     getOrderList(1, 5)
-      .then((res) => setOrders(res.dtoList))
+      .then((res) => setOrders(res?.dtoList || [])) //
       .catch(console.error);
 
     getCommunityList({ page: 1, size: 5 })
-      .then((res) => setCommunity(res.dtoList))
+      .then((res) => setCommunity(res?.dtoList || [])) //
       .catch(console.error);
 
     getSellerList(1, 8)
-      .then((res) => setSellers(res.dtoList))
+      .then((res) => setSellers(res?.dtoList || [])) //
       .catch(console.error);
   }, []);
 
