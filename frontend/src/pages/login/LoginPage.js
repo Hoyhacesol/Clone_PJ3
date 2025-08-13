@@ -37,27 +37,27 @@ function LoginPage() {
     e.preventDefault();
     setError("");
 
-    const formData = new URLSearchParams();
-    formData.append("username", userid);
-    formData.append("password", passwd);
-
     try {
-      const res = await fetch("/login", {
+      // 1. 주소는 '/api/members/login' 그대로!
+      const res = await fetch("/api/members/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          // 2. '서류 봉투'에서 'JSON 택배'로 Content-Type 변경!
+          "Content-Type": "application/json",
         },
         credentials: "include",
-        body: formData.toString(),
+        // 3. 데이터를 DTO에 맞는 JSON 형식으로 만들어서 전송!
+        body: JSON.stringify({ userId: userid, userPw: passwd }),
       });
 
       if (!res.ok) {
-        throw new Error("로그인 실패");
+        // 서버가 401 같은 에러를 보내면 여기서 잡힘
+        const errorText = await res.text();
+        throw new Error(errorText || "로그인 실패");
       }
 
-      // 주석: 로그인 성공 후 내 정보 요청
+      // 로그인 성공 후 내 정보 요청
       const userData = await checkAuth();
-
       setUser(userData);
 
       if (remember) {

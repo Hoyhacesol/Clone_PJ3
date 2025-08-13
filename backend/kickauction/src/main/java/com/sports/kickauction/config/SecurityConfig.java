@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +52,8 @@ public class SecurityConfig {
                 // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 // .cors(withDefaults())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session
+                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 // .cors(Customizer.withDefaults())
                 // api/display/** 안넣으면 이미지 문제생길시 허용이안됨 */
                 .authorizeHttpRequests(auth -> auth
