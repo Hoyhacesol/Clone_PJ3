@@ -77,6 +77,6 @@ public class Community {
     }
 
     // n + 1 문제 해결을 위해
-    @Formula("(SELECT COUNT(*) FROM COMMENT cm WHERE cm.pno = pno)")
+    @Formula("(SELECT COUNT(*) FROM comment cm WHERE cm.pno = pno)")
     private Long commentCount;
 }

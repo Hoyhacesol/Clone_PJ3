@@ -72,17 +72,6 @@ public class SecurityConfig {
                                 "/api/messages/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginProcessingUrl("/login")
-                        .successHandler((req, res, auth) -> {
-                            SecurityContextHolder.getContext().setAuthentication(auth); // 인증 세션 만들기
-                            res.setStatus(HttpServletResponse.SC_OK);
-                        })
-                        .failureHandler((req, res, ex) -> {
-                            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            res.getWriter().write("로그인 실패");
-                        })
-                        .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))

@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export const API_SERVER_HOST = "http://43.201.249.236:8080";
+export const API_SERVER_HOST = "";
 
 axios.defaults.withCredentials = true;

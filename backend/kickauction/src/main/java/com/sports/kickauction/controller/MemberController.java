@@ -9,6 +9,10 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sports.kickauction.dto.LoginRequestDTO;
 import com.sports.kickauction.dto.MemberSellerDTO;
 import com.sports.kickauction.entity.Member;
 import com.sports.kickauction.entity.Request;
@@ -30,6 +35,7 @@ import com.sports.kickauction.service.MemberService;
 import com.sports.kickauction.service.SellerService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -41,6 +47,7 @@ public class MemberController {
   private final SellerService sellerService;
   private final RequestRepository requestRepository;
   private final BizRepository bizRepository;
+  private final AuthenticationManager authenticationManager;
 
     // 매핑:이메일 체크
     @GetMapping("/email_check")
@@ -118,6 +125,30 @@ public class MemberController {
     memberService.registerSeller(member, dto.getSname(), dto.getSlocation());
 
     return ResponseEntity.ok("환영합니다! 회원가입이 완료되었습니다.");
+    }
+
+    //매핑: 로그인-for Ec2
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
+        try {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                loginRequestDTO.getUserId(), 
+                loginRequestDTO.getUserPw()
+            );
+
+            // SecurityConfig에 설정된 AuthenticationManager가 비밀번호를 대조해 줌
+            Authentication authentication = authenticationManager.authenticate(token);
+
+            // 인증 성공! 세션에 인증 정보 저장
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+
+            return ResponseEntity.ok().body("로그인 성공!");
+
+        } catch (Exception e) {
+            // 인증 실패 시 (아이디가 없거나, 비밀번호가 틀렸을 때)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이메일 또는 비밀번호가 일치하지 않습니다.");
+        }
     }
 
     // 매핑: 프로필사진 업로드
